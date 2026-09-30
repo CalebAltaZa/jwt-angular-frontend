@@ -152,9 +152,18 @@ const token = await page.evaluate(() => localStorage.getItem('marvel_jwt'));
 record('El token está en localStorage (marvel_jwt)', !!token, token ? `${token.slice(0, 24)}…` : 'ausente');
 
 console.log('\n=== 6. Agregar item ===');
+// Los ids visibles antes de tocar nada: al final hay que comprobar que siguen
+// todos ahí, para que la prueba nunca se coma un item sembrado.
+const readIds = () =>
+  page.$$eval('ul li', (cards) =>
+    cards.map((li) => li.querySelector('p.font-mono')?.textContent?.match(/id (\d+)/)?.[1] ?? '?'),
+  );
+const idsBefore = await readIds();
+
+const NEW_NAME = 'Moon Knight: Elrijk';
 await page.getByRole('button', { name: /agregar item/i }).first().click();
 await page.waitForURL('**/agregar', { timeout: 10000 });
-await page.getByLabel('Nombre').fill('Moon Knight: Elrijk');
+await page.getByLabel('Nombre').fill(NEW_NAME);
 await page.getByLabel('Categoría').click();
 await page.getByRole('option', { name: 'Series' }).click();
 await page.getByLabel('URL de imagen (opcional)').fill('/posters/wakanda.svg');
@@ -164,12 +173,19 @@ await page.screenshot({ path: `${SHOTS}/03-agregar.png`, fullPage: true });
 await page.getByRole('button', { name: /guardar item/i }).click();
 await page.waitForURL('**/dashboard', { timeout: 15000 });
 await page.waitForTimeout(1200);
+
 const afterAdd = await page.locator('ul li').count();
 record('El item nuevo aparece en la lista', afterAdd === itemsCount + 1, `${itemsCount} → ${afterAdd}`);
 await page.screenshot({ path: `${SHOTS}/04-dashboard-con-nuevo.png`, fullPage: true });
 
+// Todas las acciones siguientes van sobre la tarjeta del item recién creado,
+// nunca sobre "el primer botón de la lista": si no, la prueba borraría un item
+// preexistente en cuanto el orden de la lista cambie.
+const card = page.locator('ul li').filter({ hasText: NEW_NAME });
+record('La tarjeta del item nuevo es localizable', (await card.count()) === 1);
+
 console.log('\n=== 7. Favorito y eliminar ===');
-await page.locator('ul li button[matIconButton]').nth(2).click();
+await card.locator('button[matIconButton]').click();
 await page.waitForTimeout(900);
 const patchCall = apiCalls.filter((c) => c.method === 'PATCH').pop();
 record(
@@ -179,10 +195,14 @@ record(
 );
 
 page.once('dialog', (d) => d.accept());
-await page.getByRole('button', { name: /eliminar/i }).first().click();
+await card.getByRole('button', { name: /eliminar/i }).click();
 await page.waitForTimeout(1200);
 const afterDelete = await page.locator('ul li').count();
-record('El item se elimina', afterDelete === afterAdd - 1, `${afterAdd} → ${afterDelete}`);
+record('El item se elimina', afterDelete === itemsCount, `${afterAdd} → ${afterDelete}`);
+
+const idsAfter = await readIds();
+const lost = idsBefore.filter((id) => !idsAfter.includes(id));
+record('Ningún item previo se perdió', lost.length === 0, lost.length ? `perdidos: ${lost.join(', ')}` : `${idsBefore.length} ids intactos`);
 
 console.log('\n=== 8. Sesión cerrada ===');
 await page.getByRole('button', { name: /^salir$/i }).click();
