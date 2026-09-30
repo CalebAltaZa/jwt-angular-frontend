@@ -1,0 +1,77 @@
+<main class="min-h-screen flex items-center justify-center px-4 py-10">
+  <section class="w-full max-w-md">
+    <header class="text-center mb-8">
+      <p class="text-red-500/80 text-xs tracking-[0.4em] uppercase mb-2">Práctica de seguridad</p>
+      <h1 class="marvel-title text-6xl text-white leading-none">
+        MARVEL<span class="text-red-600">.</span>JWT
+      </h1>
+      <p class="text-white/50 text-sm mt-3">
+        Tu usuario vive en <span class="text-white/80">OpenLDAP</span>, la sesión viaja en un
+        <span class="text-white/80">JWT (RS256)</span> y cada item se guarda con tu
+        <span class="text-white/80">claim <code>sub</code></span>.
+      </p>
+    </header>
+
+    <div class="glass-card p-8 shadow-2xl">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-1">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Usuario LDAP</mat-label>
+          <input matInput formControlName="username" autocomplete="username" placeholder="caleb" />
+          <mat-icon matIconSuffix>person</mat-icon>
+          @if (form.controls.username.hasError('required')) {
+            <mat-error>Escribe tu usuario</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <mat-icon matIconSuffix>lock</mat-icon>
+          @if (form.controls.password.hasError('required')) {
+            <mat-error>Escribe tu contraseña</mat-error>
+          }
+        </mat-form-field>
+
+        @if (error(); as message) {
+          <p class="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2 mb-3">
+            {{ message }}
+          </p>
+        }
+
+        <button
+          matButton="filled"
+          class="h-12 text-base"
+          type="submit"
+          [disabled]="invalid"
+        >
+          @if (loading()) {
+            <mat-spinner diameter="20" />
+            <span class="ml-2">Validando en LDAP…</span>
+          } @else {
+            <span>Iniciar sesión</span>
+          }
+        </button>
+      </form>
+    </div>
+
+    <div class="mt-6 glass-card p-4">
+      <p class="text-xs uppercase tracking-widest text-white/40 mb-2">Cuentas de prueba</p>
+      <div class="flex flex-wrap gap-2">
+        <button matButton="outlined" class="text-xs" type="button" (click)="fill('caleb', 'caleb123')">
+          caleb
+        </button>
+        <button matButton="outlined" class="text-xs" type="button" (click)="fill('ivan', 'ivan123')">
+          ivan
+        </button>
+        <button matButton="outlined" class="text-xs" type="button" (click)="fill('alia', 'alia123')">
+          alia
+        </button>
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Tailwind escanea los templates de la app para generar sólo las clases usadas. */
+@source "./app";
