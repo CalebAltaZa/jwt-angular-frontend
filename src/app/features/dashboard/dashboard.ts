@@ -14,6 +14,9 @@ import { AuthService } from '../../core/auth.service';
 import { ItemsService } from '../../core/items.service';
 import { CATEGORIES, Item } from '../../core/models';
 
+/** Póster por defecto cuando un item no tiene imagen o la URL falla. */
+const FALLBACK_POSTER = '/posters/fallback.svg';
+
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -43,6 +46,9 @@ export class Dashboard {
   protected readonly search = signal('');
   protected readonly category = signal<string>('Todas');
 
+  /** Ids cuya imagen no cargó: se les muestra el póster por defecto. */
+  private readonly brokenImages = signal<ReadonlySet<number>>(new Set());
+
   protected readonly filtered = computed(() => {
     const term = this.search().trim().toLowerCase();
     const category = this.category();
@@ -66,6 +72,7 @@ export class Dashboard {
   protected load(): void {
     this.loading.set(true);
     this.error.set(null);
+    this.brokenImages.set(new Set());
     this.itemsService.list().subscribe({
       next: (response) => {
         this.items.set(response.items);
@@ -76,6 +83,18 @@ export class Dashboard {
         this.loading.set(false);
       },
     });
+  }
+
+  /** URL de la imagen: si falló o no hay, se usa el póster local. */
+  protected imageSrc(item: Item): string {
+    if (this.brokenImages().has(item.id) || !item.image_url) {
+      return FALLBACK_POSTER;
+    }
+    return item.image_url;
+  }
+
+  protected markImageBroken(item: Item): void {
+    this.brokenImages.update((current) => new Set([...current, item.id]));
   }
 
   protected setCategory(category: string): void {

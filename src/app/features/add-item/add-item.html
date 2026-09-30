@@ -1,5 +1,5 @@
 <div class="min-h-screen">
-  <mat-toolbar class="!bg-black/40 !backdrop-blur border-b border-white/10 px-4 sm:px-8">
+  <mat-toolbar class="app-bar px-4 sm:px-8">
     <a routerLink="/dashboard" class="marvel-title text-2xl tracking-widest no-underline">
       MARVEL<span class="text-red-600">.</span>JWT
     </a>
@@ -12,7 +12,7 @@
 
   <main class="max-w-3xl mx-auto px-4 sm:px-8 py-10">
     <header class="mb-8">
-      <h1 class="marvel-title text-5xl text-white leading-none">Agregar item</h1>
+      <h1 class="marvel-title text-5xl text-white">Agregar item</h1>
       <p class="text-white/50 text-sm mt-2">
         Se guardará con tu identidad del token
         <code class="text-red-400">sub = {{ auth.username() }}</code>
@@ -62,10 +62,15 @@
       @if (preview() && !previewFailed()) {
         <img
           [src]="preview()"
-          alt="Vista previa"
-          class="w-full max-h-56 object-cover rounded-xl mb-4 border border-white/10"
+          alt="Vista previa de la imagen"
+          class="w-full max-h-56 object-cover rounded-xl mb-2 border border-white/10"
           (error)="previewFailed.set(true)"
         />
+      } @else if (preview() && previewFailed()) {
+        <p class="text-xs text-amber-300/90 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2 mb-4">
+          <mat-icon class="align-middle text-base">warning</mat-icon>
+          Esa URL no responde. El item se guardará igual y se mostrará el póster por defecto.
+        </p>
       }
 
       @if (error(); as message) {

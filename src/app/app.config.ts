@@ -6,6 +6,7 @@ import {
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { routes } from './app.routes';
@@ -16,6 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding()),
     provideAnimationsAsync(),
+
+    // Los <mat-icon> usan la fuente local "Material Icons Round" (ver styles.scss).
+    { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-icons-round' } },
 
     // HttpClient con el interceptor FUNCIONAL que adjunta el JWT.
     provideHttpClient(withInterceptors([authInterceptor])),

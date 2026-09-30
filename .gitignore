@@ -1,4 +1,4 @@
-# Dependencias y artefactos
+# Dependencias y artefactos de build
 node_modules/
 dist/
 .angular/
@@ -9,10 +9,13 @@ out-tsc/
 .env
 .env.local
 
+# Playwright (pruebas e2e: los binarios y las capturas no se versionan)
+e2e/screenshots/
+
 # Editores
+.idea/
 .vscode/*
 !.vscode/extensions.json
-.idea/
 
 # Sistema
 .DS_Store

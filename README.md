@@ -129,3 +129,27 @@ Build de produccion: `npm run build` (sale en `dist/jwt-angular-frontend/browser
   reducir el impacto de un XSS.
 - `console.log` del interceptor es intencional: es la evidencia que pide la
   practica de que cada request lleva el token.
+
+## Pruebas
+
+```bash
+npm test     # 21 pruebas unitarias (vitest + TestBed)
+npm run e2e  # 20 verificaciones en un Firefox real (Playwright)
+```
+
+`npm test` cubre el interceptor (adjunta `Authorization: Bearer`, no lo añade en
+el login, limpia la sesión en un 401 y **no** en un 500), la reactividad del
+signal del token, el login (guarda token y claims, un token expirado no cuenta
+como sesión) y las rutas y métodos HTTP de los servicios.
+
+`npm run e2e` necesita el stack levantado (`./setup.sh && docker compose up -d`
+en la raíz del proyecto). Abre `http://localhost:8080`, hace login con LDAP,
+recorre el dashboard, agrega/favorita/borra un item y cierra sesión; además
+comprueba que los `<mat-icon>` renderizan glifos, que las 13 portadas cargan
+desde `/posters/*.svg` y que no hay peticiones a recursos externos. Las
+capturas quedan en `e2e/screenshots/`.
+
+```bash
+npm run e2e -- http://localhost:8080   # contra otro host
+HEADED=1 npm run e2e                   # con la ventana del navegador visible
+```

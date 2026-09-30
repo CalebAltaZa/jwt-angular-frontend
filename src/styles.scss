@@ -16,6 +16,27 @@ html {
   );
 }
 
+/* ---------- Iconos: fuente local (sin CDN) ---------- */
+/* Angular Material aplica por defecto la clase `material-icons`; aquí se usa la
+   variante Round empaquetada con @fontsource, así los <mat-icon> muestran
+   glifos y no el texto de la ligadura ("favorite", "add", "delete"...). */
+.material-icons-round {
+  font-family: 'Material Icons Round';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
 /* ----------------------------- Globales ---------------------------------- */
 :root {
   --marvel-red: #e62429;
@@ -37,9 +58,14 @@ body {
   font-family: Inter, system-ui, sans-serif;
 }
 
+/* Títulos de la tipografía display: interlineado amplio para que las
+   mayúsculas altas de Bebas Neue no se recorten por arriba o por abajo. */
 .marvel-title {
-  font-family: 'Bebas Neue', Impact, sans-serif;
-  letter-spacing: 0.06em;
+  font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  padding-bottom: 0.06em;
+  text-transform: uppercase;
 }
 
 .glass-card {
@@ -49,9 +75,20 @@ body {
   border-radius: 1rem;
 }
 
-/* Evita que el <select> nativo se vea fuera de tema en modo oscuro */
-select,
+/* Barra superior con fondo translúcido (Material pone su propio color) */
+.app-bar {
+  background: rgba(9, 9, 12, 0.72) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Formularios: campo de texto claro sobre fondo oscuro */
+.mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
 input,
-textarea {
+textarea,
+select {
   color-scheme: dark;
 }

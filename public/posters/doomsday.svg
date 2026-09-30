@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a0308"/>
+      <stop offset="1" stop-color="#0b0305"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.62">
+      <stop offset="0" stop-color="#e62429" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e62429" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="4" r="2.4" fill="#ffffff" opacity="0.10"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <g><polygon points="699.7,211.5 1019.4,197.1 1019.4,252.9 699.7,238.5" fill="#ffffff" opacity="0.22"/><polygon points="686.2,314.8 991.6,410.6 972.5,463.0 677.0,340.2" fill="#ffffff" opacity="0.22"/><polygon points="638.3,407.3 892.4,601.8 856.5,644.5 620.9,428.0" fill="#ffffff" opacity="0.22"/><polygon points="561.5,477.8 733.8,747.4 685.5,775.3 538.2,491.3" fill="#ffffff" opacity="0.22"/><polygon points="465.3,517.8 535.0,830.1 480.1,839.8 438.8,522.5" fill="#ffffff" opacity="0.22"/><polygon points="361.2,522.5 319.9,839.8 265.0,830.1 334.7,517.8" fill="#ffffff" opacity="0.22"/><polygon points="261.8,491.3 114.5,775.3 66.2,747.4 238.5,477.8" fill="#ffffff" opacity="0.22"/><polygon points="179.1,428.0 -56.5,644.5 -92.4,601.8 161.7,407.3" fill="#ffffff" opacity="0.22"/><polygon points="123.0,340.2 -172.5,463.0 -191.6,410.6 113.8,314.8" fill="#ffffff" opacity="0.22"/><polygon points="100.3,238.5 -219.4,252.9 -219.4,197.1 100.3,211.5" fill="#ffffff" opacity="0.22"/><polygon points="113.8,135.2 -191.6,39.4 -172.5,-13.0 123.0,109.8" fill="#ffffff" opacity="0.22"/><polygon points="161.7,42.7 -92.4,-151.8 -56.5,-194.5 179.1,22.0" fill="#ffffff" opacity="0.22"/><polygon points="238.5,-27.8 66.2,-297.4 114.5,-325.3 261.8,-41.3" fill="#ffffff" opacity="0.22"/><polygon points="334.7,-67.8 265.0,-380.1 319.9,-389.8 361.2,-72.5" fill="#ffffff" opacity="0.22"/><polygon points="438.8,-72.5 480.1,-389.8 535.0,-380.1 465.3,-67.8" fill="#ffffff" opacity="0.22"/><polygon points="538.2,-41.3 685.5,-325.3 733.8,-297.4 561.5,-27.8" fill="#ffffff" opacity="0.22"/><polygon points="620.9,22.0 856.5,-194.5 892.4,-151.8 638.3,42.7" fill="#ffffff" opacity="0.22"/><polygon points="677.0,109.8 972.5,-13.0 991.6,39.4 686.2,135.2" fill="#ffffff" opacity="0.22"/></g>
+  <rect width="800" height="450" fill="url(#dots)"/>
+  <g transform="translate(400 200)"><g transform="scale(1.05)" opacity="0.75"><circle r="70" fill="none" stroke="#ffffff" stroke-width="10"/><circle r="110" fill="none" stroke="#ffffff" stroke-width="10"/><circle r="150" fill="none" stroke="#ffffff" stroke-width="10"/></g><g transform="scale(0.72)" fill="#ffffff" opacity="0.9"><path d="M45,-120 L-70,14 L-12,14 L-45,120 L70,-14 L12,-14 Z"/></g></g>
+  <rect width="800" height="450" fill="url(#glow)"/>
+  <text x="400" y="250" text-anchor="middle" font-size="132" fill="#ffffff" opacity="1" letter-spacing="2" font-family="'Arial Black', Impact, Haettenschweiler, sans-serif" font-weight="900">DOOMSDAY</text>
+  <text x="400" y="410" text-anchor="middle" font-size="22" fill="#ffffff" opacity="0.75" letter-spacing="6" font-family="Verdana, Geneva, sans-serif" font-weight="700">MARVEL · FAN LIST</text>
+  <rect x="0" y="0" width="800" height="10" fill="#e62429"/>
+  <rect x="0" y="440" width="800" height="10" fill="#e62429"/>
+</svg>
