@@ -10,9 +10,10 @@ import { TokenStorage } from './token-storage';
  *
  * 1. Lee el JWT emitido por jwt-ldap-auth (vía @auth0/angular-jwt config).
  * 2. Lo inyecta en TODAS las peticiones salientes.
- * 3. Lo deja visible en la consola: es justo lo que hay que mostrar en el
- *    video (pestaña Network / DevTools Console).
- * 4. Si el backend responde 401, limpia la sesión y vuelve al login.
+ * 3. Si el backend responde 401, limpia la sesión y vuelve al login.
+ *
+ * Por seguridad el token NUNCA se imprime en consola: la evidencia del JWT
+ * se ve en la pestaña Network del DevTools (cabecera Authorization).
  *
  * Nota: no se inyecta AuthService aquí a propósito — AuthService usa
  * HttpClient y eso crearía una dependencia cíclica.
@@ -22,21 +23,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const token = storage.get();
 
-  const isApiCall = req.url.includes('/api/');
   const authorized = token
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     : req;
-
-  if (isApiCall) {
-    if (token) {
-      const preview = `${token.slice(0, 24)}…${token.slice(-8)}`;
-      console.log(
-        `[JWT] ${authorized.method} ${authorized.url}  Authorization: Bearer ${preview}`,
-      );
-    } else {
-      console.log(`[JWT] ${req.method} ${req.url}  (sin token todavía)`);
-    }
-  }
 
   return next(authorized).pipe(
     catchError((error: unknown) => {

@@ -35,8 +35,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     : req;
 
-  console.log(`[JWT] ${authorized.method} ${authorized.url}  Authorization: Bearer ${token}`);
-
   return next(authorized).pipe(
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401 && token) {
@@ -127,8 +125,10 @@ Build de produccion: `npm run build` (sale en `dist/jwt-angular-frontend/browser
 - El token se guarda en `localStorage` bajo la clave `marvel_jwt`. Es lo que pide
   el ejercicio; en un sistema real conviene moverlo a una cookie `HttpOnly` para
   reducir el impacto de un XSS.
-- `console.log` del interceptor es intencional: es la evidencia que pide la
-  practica de que cada request lleva el token.
+- El JWT **no se imprime en consola**: la evidencia de que cada request lleva
+  el token se ve en DevTools → **Network** (cabecera `Authorization`). Evitar
+  volcar tokens/claims en la consola reduce el riesgo de fuga vía XSS o
+  capturas de pantalla.
 
 ## Pruebas
 

@@ -46,10 +46,6 @@ export class AuthService {
       tap((response) => {
         this.storage.set(response.access_token);
         this.claims.set(this.readClaims());
-        console.log(
-          `[JWT] login OK — ${response.username} (expira en ${response.expires_in}s)`,
-          this.claims(),
-        );
       }),
     );
   }
