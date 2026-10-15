@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build
 
 # ---------- Etapa 2: nginx sirve el build y hace de reverse proxy -----------
-FROM nginx:1.27-alpine
+FROM nginx:stable-alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/jwt-angular-frontend/browser /usr/share/nginx/html
