@@ -22,6 +22,7 @@ const expected = {
   'referrer-policy': 'no-referrer',
   'x-permitted-cross-domain-policies': 'none',
   'cross-origin-opener-policy': 'same-origin',
+  'cross-origin-embedder-policy': 'require-corp',
 };
 
 for (const name of Object.keys(expected)) {
