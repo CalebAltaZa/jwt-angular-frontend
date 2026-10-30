@@ -25,6 +25,7 @@ const expected = {
   'cross-origin-embedder-policy': 'require-corp',
   'cross-origin-resource-policy': 'same-origin',
   'permissions-policy': 'geolocation=(), microphone=(), camera=()',
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
 };
 
 for (const name of Object.keys(expected)) {
