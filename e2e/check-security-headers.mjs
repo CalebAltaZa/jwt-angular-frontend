@@ -24,6 +24,7 @@ const expected = {
   'cross-origin-opener-policy': 'same-origin',
   'cross-origin-embedder-policy': 'require-corp',
   'cross-origin-resource-policy': 'same-origin',
+  'permissions-policy': 'geolocation=(), microphone=(), camera=()',
 };
 
 for (const name of Object.keys(expected)) {
