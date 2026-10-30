@@ -68,5 +68,21 @@ vulnerabilidades críticas/altas explotables de caja negra).
 
 ## Estado
 
-- [ ] Corrección de cabeceras de seguridad en `frontend/nginx.conf`
-- [ ] Ocultar versión de nginx (`server_tokens off`)
+Correcciones aplicadas, **cada una con su prueba**:
+
+- [x] Ocultar la versión de nginx con `server_tokens off`.
+      Validado por [`e2e/check-server-tokens.mjs`](../../e2e/check-server-tokens.mjs)
+      y [`security/evidence/fix-nginx-version.md`](../evidence/fix-nginx-version.md).
+- [x] Actualizar la imagen base a `nginx:stable-alpine` (nginx 1.27 EOL).
+      Validado por [`e2e/check-nginx-image.mjs`](../../e2e/check-nginx-image.mjs)
+      y [`security/evidence/fix-nginx-eol.md`](../evidence/fix-nginx-eol.md).
+- [x] Cabeceras de seguridad en `nginx.conf` (10, una por commit).
+      Validado por [`e2e/check-security-headers.mjs`](../../e2e/check-security-headers.mjs)
+      y [`security/evidence/`](../evidence/) (`fix-header-*.md`).
+
+Validación en vivo del stack tras las correcciones:
+[`security/evidence/live-validation.md`](../evidence/live-validation.md).
+
+> Tras las correcciones hay que reconstruir la imagen del frontend
+> (`docker compose build frontend && docker compose up -d frontend`) y volver a
+> lanzar Nuclei para confirmar que los hallazgos desaparecen.
