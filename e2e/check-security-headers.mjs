@@ -21,6 +21,7 @@ const expected = {
   'x-frame-options': 'DENY',
   'referrer-policy': 'no-referrer',
   'x-permitted-cross-domain-policies': 'none',
+  'cross-origin-opener-policy': 'same-origin',
 };
 
 for (const name of Object.keys(expected)) {
