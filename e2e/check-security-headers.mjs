@@ -20,6 +20,7 @@ const expected = {
   'x-content-type-options': 'nosniff',
   'x-frame-options': 'DENY',
   'referrer-policy': 'no-referrer',
+  'x-permitted-cross-domain-policies': 'none',
 };
 
 for (const name of Object.keys(expected)) {
