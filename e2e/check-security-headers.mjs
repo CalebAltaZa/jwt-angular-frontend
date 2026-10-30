@@ -34,7 +34,12 @@ for (const name of Object.keys(expected)) {
     `nginx.conf no define add_header ${name}`,
   );
 }
-console.log(`OK  nginx.conf define ${Object.keys(expected).length} cabeceras de seguridad`);
+assert.match(
+  nginxConf,
+  /add_header\s+Content-Security-Policy\s/i,
+  'nginx.conf no define Content-Security-Policy',
+);
+console.log(`OK  nginx.conf define ${Object.keys(expected).length + 1} cabeceras de seguridad`);
 
 const siteUrl = process.env.SITE_URL ?? 'http://localhost:8080';
 try {
@@ -42,6 +47,10 @@ try {
   for (const [name, value] of Object.entries(expected)) {
     assert.equal(response.headers.get(name), value, `cabecera ${name} incorrecta o ausente`);
   }
+  assert.ok(
+    response.headers.get('content-security-policy'),
+    'falta Content-Security-Policy en la respuesta',
+  );
   console.log('OK  todas las cabeceras presentes en la respuesta HTTP real');
 } catch (error) {
   if (error instanceof TypeError) {
