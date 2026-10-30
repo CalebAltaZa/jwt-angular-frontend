@@ -19,6 +19,7 @@ const nginxConf = readFileSync(join(root, 'nginx.conf'), 'utf8');
 const expected = {
   'x-content-type-options': 'nosniff',
   'x-frame-options': 'DENY',
+  'referrer-policy': 'no-referrer',
 };
 
 for (const name of Object.keys(expected)) {
